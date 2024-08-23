@@ -211,9 +211,9 @@ class DrawerScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Caltex',
+                    'Futurehub',
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 20,
                       color: Palette.whiteColor,
                       fontWeight: FontWeight.bold,
                     ),

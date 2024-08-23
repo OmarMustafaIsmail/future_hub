@@ -61,10 +61,10 @@ class FutureHubAppBar extends AppBar {
                               ),
                             ],
                           )
-                        : Image.asset(
-                            'assets/images/logo.jpg',
-                            height: 30,
-                          ),
+                        : SvgPicture.asset(
+                      'assets/icons/app-bar-logo.svg',
+                      height: 30,
+                    ),
                   ),
           ],
           leading: Directionality.of(context) == TextDirection.ltr

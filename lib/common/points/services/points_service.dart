@@ -80,6 +80,7 @@ class PointsService {
     final numberPoints = numberPointsResult.parsedData?.aboutUs.number_point;
 
     final data = result.parsedData?.giftBrands!.data;
+    debugPrint("test data ${data.toString()}");
     final hasMorePages =
         result.parsedData?.giftBrands!.paginatorInfo!.hasMorePages;
     return PaginatorInfo(

@@ -151,7 +151,7 @@ class FutureHubApp extends StatelessWidget {
                   builder: (context, state) {
                     debugPrint(state.toString());
                     return MaterialApp.router(
-                      title: 'Caltex KSA',
+                      title: 'Futurehub',
                       routerConfig: router,
                       debugShowCheckedModeBanner: false,
                       localizationsDelegates: const [
