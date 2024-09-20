@@ -58,7 +58,7 @@ class ChooseLanguageScreen extends StatelessWidget {
             child: SizedBox(
                 height: height * 0.2,
                 child: Image.asset(
-                  'assets/images/choose_language.png',
+                  'assets/images/choose_languages_updated.png',
                   fit: BoxFit.contain,
                 )),
           ),
@@ -84,12 +84,12 @@ class ChooseLanguageScreen extends StatelessWidget {
                   color: Palette.primaryColor,
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Center(
                     child: Text(
-                      t.english,
-                      style: const TextStyle(
+                      'English',
+                      style: TextStyle(
                         color: Palette.whiteColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w900,
@@ -116,12 +116,12 @@ class ChooseLanguageScreen extends StatelessWidget {
                     width: 1,
                   ),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Center(
                     child: Text(
-                      t.arabic,
-                      style: const TextStyle(
+                      'العربية',
+                      style: TextStyle(
                         color: Palette.primaryColor,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
@@ -135,7 +135,7 @@ class ChooseLanguageScreen extends StatelessWidget {
           const Spacer(),
           Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
                   'v1.0',

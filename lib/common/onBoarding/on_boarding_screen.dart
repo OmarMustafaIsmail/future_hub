@@ -18,21 +18,21 @@ class OnboardingScreenState extends State<OnboardingScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const OnboardingPage(
+    OnboardingPage(
       image: 'assets/images/onboarding_image1.png',
-      title: 'محفظة فيوتشرهب',
-      description: 'محفظة تتناسب مع جميع وسائل الدفع الإلكتروني',
+      title: CacheManager.locale!.languageCode == 'ar'? 'محفظة فيوتشرهب':'Future hub Wallet',
+      description: CacheManager.locale!.languageCode == 'ar'?'محفظة تتناسب مع جميع وسائل الدفع الإلكتروني':'A wallet that is compatible with all electronic payment methods',
     ),
-    const OnboardingPage(
+     OnboardingPage(
       image: 'assets/images/onboarding_image1.png',
-      title: 'السهولة والأمان',
+      title: CacheManager.locale!.languageCode == 'ar'?'السهولة والأمان':'Ease and security',
       description:
-          'التطبيق الأول في المملكة العربية السعودية لبيع الزيوت الخاصة بكالتكس بأمان وسهولة',
+      CacheManager.locale!.languageCode == 'ar'?'التطبيق الأول في المملكة العربية السعودية لبيع الزيوت الخاصة بكالتكس بأمان وسهولة':'The first application in the Kingdom of Saudi Arabia to sell Caltex oils safely and easily',
     ),
-    const OnboardingPage(
+     OnboardingPage(
       image: 'assets/images/onboarding_image1.png',
-      title: 'العديد من المنتجات',
-      description: 'العديد من المنتجات المميزة مع تخفيضات حصرية',
+      title: CacheManager.locale!.languageCode == 'ar'?'العديد من المنتجات':'Many products',
+      description: CacheManager.locale!.languageCode == 'ar'?'العديد من المنتجات المميزة مع تخفيضات حصرية':'Many distinctive products with exclusive discounts',
     ),
   ];
 
