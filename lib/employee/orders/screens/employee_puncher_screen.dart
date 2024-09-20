@@ -31,22 +31,23 @@ class EmployeePuncherScreen extends StatefulWidget {
 }
 
 class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
-  var loading = false;
+  void _incrementQuantity(CompanyProduct product) {
+    final orderCubit = context.read<OrderCubit>();
+    final isSelected = orderCubit.state.products.containsKey(widget.id.toString());
 
-  Future<void> _loadOrder() async {
-    setState(() {
-      loading = true;
-    });
-    context.read<OrderCubit>().validateOrder(context).whenComplete(() {
-      setState(() {
-        loading = false;
-      });
-      context.push(
-        '/employee/order-details?showButton=true',
-        extra: context.read<OrderCubit>().state.toOrder(context),
-      );
-    });
+    if (isSelected) {
+      orderCubit.incrementProductQuantity(widget.id.toString());
+    } else {
+      orderCubit.addProduct(product);
+    }
   }
+
+  void _decrementQuantity() {
+    final orderCubit = context.read<OrderCubit>();
+    orderCubit.decrementProductQuantity(widget.id.toString());
+  }
+
+
 
   Future<void> _onLoadMore() async {
     return BlocProvider.of<ProductsCubit>(context).loadProducts(context);
@@ -58,12 +59,25 @@ class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
     final orderCubit = context.read<OrderCubit>();
     orderCubit.choosePuncher(widget.id);
   }
+  Future<void> _loadOrder() async {
+    // setState(() {
+    //   loading = true;
+    // });
+    context.read<OrderCubit>().validateOrder(context).whenComplete(() {
+      // setState(() {
+      //   loading = false;
+      // });
+      context.push(
+        '/employee/order-details?showButton=true',
+        extra: context.read<OrderCubit>().state.toOrder(context),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final size = MediaQuery.of(context).size;
     return BlocConsumer<ProductsCubit, ProductsStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -82,19 +96,22 @@ class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
         return Scaffold(
           backgroundColor: Palette.whiteColor,
           appBar: FutureHubAppBar(
+            onCartTap:_loadOrder,
             title: Text(
               widget.name,
               style: const TextStyle(
                 fontSize: 22,
                 color: Palette.blackColor,
                 fontWeight: FontWeight.w900,
+
               ),
+
             ),
             isCart: true,
             context: context,
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -123,7 +140,7 @@ class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
                 // ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 100),
+                    padding: const EdgeInsets.only(bottom: 0),
                     child: InfiniteListView(
                       itemCount: products.length,
                       canLoadMore: canLoadMore,
@@ -131,7 +148,7 @@ class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 5.0, vertical: 20),
+                              horizontal: 5.0, vertical: 0),
                           child: InkWell(
                             onTap: () {
                               context.push(
@@ -153,73 +170,6 @@ class _EmployeePuncherScreenState extends State<EmployeePuncherScreen> {
                   ),
                 ),
               ],
-            ),
-          ),
-          bottomSheet: SizedBox(
-            height: size.height * 0.1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Palette.primaryColor,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 15,
-                      ),
-                      child: BlocBuilder<OrderCubit, OrderState>(
-                        builder: (context, state) {
-                          return Text(
-                            state.totalQuantity.toString(),
-                            style: theme.textTheme.bodyLarge!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 20,
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        t.order_total,
-                        style: theme.textTheme.titleMedium!.copyWith(
-                            color: Palette.primaryColor,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      BlocBuilder<OrderCubit, OrderState>(
-                          builder: (context, state) {
-                        return PriceText(price: state.totalPrice);
-                      }),
-                    ],
-                  ),
-                  const Spacer(),
-                  Expanded(
-                    flex: 3,
-                    child: BlocBuilder<OrderCubit, OrderState>(
-                      builder: (context, state) {
-                        return ChevronButton(
-                          loading: loading,
-                          onPressed: _loadOrder,
-                          child: Text(t.next),
-                        );
-                      },
-                    ),
-                  )
-                ],
-              ),
             ),
           ),
         );

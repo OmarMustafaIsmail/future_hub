@@ -51,6 +51,7 @@ class _PasswordRecoveryOTPScreenState extends State<PasswordRecoveryOTPScreen> {
         setState(() {
           _loading = true;
         });
+        debugPrint("""result""".toString());
 
         final authCubit = context.read<AuthCubit>();
         final authState = authCubit.state as AuthSignedOut;
@@ -107,7 +108,7 @@ class _PasswordRecoveryOTPScreenState extends State<PasswordRecoveryOTPScreen> {
                 loading: _loading,
                 phone: widget.phoneNumber,
                 onResend: _sendOTP,
-                onActivate: _onActivate,
+                onActivate: (_onActivate),
               );
             }),
           ],

@@ -1,3 +1,4 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:future_hub/common/shared/models/products.dart';
 import 'package:future_hub/common/shared/palette.dart';
 import 'package:future_hub/common/shared/widgets/chevron_app_bar.dart';
@@ -7,6 +8,10 @@ import 'package:future_hub/company/products/widgets/change_public_price_bottom_s
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:future_hub/company/products/widgets/product_quantity_controls.dart';
+import 'package:future_hub/employee/orders/cubit/order_cubit.dart';
+import 'package:future_hub/employee/orders/cubit/order_state.dart';
+import 'package:go_router/go_router.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final String id;
@@ -39,13 +44,42 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
+  void _incrementQuantity() {
+    final orderCubit = context.read<OrderCubit>();
+    final isSelected = orderCubit.state.products.containsKey(widget.product.id);
+
+    if (isSelected) {
+      orderCubit.incrementProductQuantity(widget.product.id);
+    } else {
+      orderCubit.addProduct(widget.product);
+    }
+  }
+
+  void _decrementQuantity() {
+    final orderCubit = context.read<OrderCubit>();
+    orderCubit.decrementProductQuantity(widget.product.id);
+  }
+
+
+  var loading = false;
+
+  bool addedToCart =false;
+
+  Future<void> _AddToCart()async{
+    setState(() {
+      addedToCart = true;
+    });
+  }
+
+
+
   int qunatity = 0;
 
   @override
   Widget build(BuildContext context) {
     final t = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: FutureHubAppBar(
         title: Text(
@@ -56,6 +90,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             fontWeight: FontWeight.w900,
           ),
         ),
+        onTap: (){
+          if(addedToCart == false && context.read<OrderCubit>().state.products.containsKey(widget.product.id)){
+            context.read<OrderCubit>().removeProduct(widget.product.id);
+            context.pop();
+          }else{
+            context.pop();
+          }
+        },
         context: context,
       ),
       body: SingleChildScrollView(
@@ -99,41 +141,17 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             theme.textTheme.titleLarge!.copyWith(fontSize: 30),
                       ),
                     ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                // if(qunatity <= widget.product){}
-                                setState(() {
-                                  qunatity += 1;
-                                });
-                              },
-                              child: SvgPicture.asset('assets/icons/plus.svg')),
-                          const SizedBox(width: 20.0),
-                          Text(
-                            qunatity.toString(),
-                            style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
-                                color: Palette.blackColor),
-                          ),
-                          const SizedBox(width: 20.0),
-                          InkWell(
-                            onTap: () {
-                              if (qunatity > 0) {
-                                setState(() {
-                                  qunatity -= 1;
-                                });
-                              }
-                            },
-                            child: SvgPicture.asset(
-                              'assets/icons/minus.svg',
-                            ),
-                          ),
-                        ],
-                      ),
+                    BlocBuilder<OrderCubit,OrderState>(
+                      builder: (context,states) {
+                        final isSelected = states.products.containsKey(widget.product.id);
+                        final quantity =
+                        isSelected ? states.products[widget.product.id]!.quantity : 0;
+                        return ProductQuantityControls(
+                          onDecrement: _decrementQuantity,
+                          onIncrement: _incrementQuantity,
+                          quantity: quantity,
+                        );
+                      }
                     ),
                   ],
                 ),
@@ -205,9 +223,84 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     color: const Color.fromRGBO(6, 23, 55, 1),
                   ),
                 ),
+                SizedBox(height: size.height *0.25,),
+                SizedBox(
+                  height: size.height * 0.1,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    child: Row(
+                      children: [
+                        // Container(
+                        //   decoration: BoxDecoration(
+                        //     color: Palette.primaryColor,
+                        //     borderRadius: BorderRadius.circular(40),
+                        //   ),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.symmetric(
+                        //       horizontal: 20,
+                        //       vertical: 15,
+                        //     ),
+                        //     child: BlocBuilder<OrderCubit, OrderState>(
+                        //       builder: (context, state) {
+                        //         return Text(
+                        //           state.totalQuantity.toString(),
+                        //           style: theme.textTheme.bodyLarge!.copyWith(
+                        //             color: Colors.white,
+                        //             fontWeight: FontWeight.w700,
+                        //             fontSize: 20,
+                        //           ),
+                        //         );
+                        //       },
+                        //     ),
+                        //   ),
+                        // ),
+                        const SizedBox(width: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              t.order_total,
+                              style: theme.textTheme.titleMedium!.copyWith(
+                                  color: Palette.primaryColor,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return PriceText(price: state.totalPrice);
+                                }),
+                          ],
+                        ),
+                        const Spacer(),
+                        Expanded(
+                          flex: 3,
+                          child: BlocBuilder<OrderCubit, OrderState>(
+                            builder: (context, state) {
+                              return ChevronButton(
+                                // loading: loading,
+                                onPressed: (){
+                                  setState(() {
+                                    addedToCart = true;
+                                  });
+                                  debugPrint(addedToCart.toString());
+                                },
+                                child: Text(t.addToCart),
+                              );
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
+
           ],
+
         ),
       ),
     );
