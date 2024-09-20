@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class Client {
-  static const _url = 'https://futurehub.sa/public/graphql';
+    static const _url = 'https://futurehub.sa/public/graphql';
   static final _cache = GraphQLCache(store: HiveStore());
   static final Map<String, String> _defaultHeaders = {};
 

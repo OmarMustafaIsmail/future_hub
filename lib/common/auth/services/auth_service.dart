@@ -82,6 +82,7 @@ class AuthService {
     final message = data?.message;
     final user = data?.user;
 
+    debugPrint(result.toString());
     if (result.hasException) {
       throw FetchException.fromOperation(result.exception!);
     }

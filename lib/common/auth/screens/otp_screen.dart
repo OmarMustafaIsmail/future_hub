@@ -43,30 +43,33 @@ class _OTPScreenState extends State<OTPScreen> {
 
   Future<String?> onActivate(String otp) async {
     String? error;
+    try {
+      await runFetch(
+        context: context,
+        fetch: () async {
+          final authCubit = context.read<AuthCubit>();
+          final authState = authCubit.state as AuthSignedOut;
+          final user = await _authService.confirmOTP(
+            authState.phone,
+            otp,
+            EnumVerifyEnum.Verify,
+          );
+          if (!mounted) return;
+          authCubit.setOTP(otp);
+          if (user != null) {
+            debugPrint(user.toString());
+            authCubit.signingEmployee(user.name!, user.company_name!);
+          }
+          context.pushReplacement('/sign-up');
+        },
+        onValidation: (validation) {
+          error = validation['input.code'];
+        },
+      );
+    }catch(e){
+      debugPrint("""result${otp + e.toString()}""".toString());
 
-    await runFetch(
-      context: context,
-      fetch: () async {
-        final authCubit = context.read<AuthCubit>();
-        final authState = authCubit.state as AuthSignedOut;
-        final user = await _authService.confirmOTP(
-          authState.phone,
-          otp,
-          EnumVerifyEnum.Verify,
-        );
-
-        if (!mounted) return;
-
-        authCubit.setOTP(otp);
-        if (user != null) {
-          authCubit.signingEmployee(user.name!, user.company_name!);
-        }
-        context.pushReplacement('/sign-up');
-      },
-      onValidation: (validation) {
-        error = validation['input.code'];
-      },
-    );
+    }
 
     return error;
   }
@@ -93,7 +96,8 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
             const SizedBox(height: 24.0),
             BlocBuilder<AuthCubit, AuthState>(builder: (context, state) {
-              return OTPForm(
+              return
+                OTPForm(
                 buttonText: t.activate,
                 phone: (state as AuthSignedOut).otp.isEmpty
                     ? widget.phoneNumber

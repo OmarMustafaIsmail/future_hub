@@ -37,6 +37,7 @@ class _OrderDoneBottomSheetState extends State<OrderDoneBottomSheet> {
   bool isButtonEnabled = true;
 
   Future<void> _confirm() async {
+    debugPrint("helloooo");
     if (isButtonEnabled) {
       // يُعين الزرار على "معطل" لمدة 10 ثوانٍ.
       setState(() {
@@ -110,7 +111,7 @@ class _OrderDoneBottomSheetState extends State<OrderDoneBottomSheet> {
           ),
           const SizedBox(height: 35.0),
           GestureDetector(
-            onTap: () => _confirm,
+            onTap: () => _confirm(),
             child: Row(
               children: [
                 Image.asset(
@@ -139,7 +140,7 @@ class _OrderDoneBottomSheetState extends State<OrderDoneBottomSheet> {
             height: 20,
           ),
           GestureDetector(
-            onTap: () => _cancel,
+            onTap: () => _cancel(),
             child: Row(
               children: [
                 Image.asset(

@@ -41,6 +41,7 @@ import 'package:future_hub/employee/oil/screens/oil_search_result_screen.dart';
 import 'package:future_hub/employee/oil/screens/oil_search_screen.dart';
 import 'package:future_hub/employee/orders/screens/employee_new_order_screen.dart';
 import 'package:future_hub/employee/orders/screens/employee_order_details_screen.dart';
+import 'package:future_hub/employee/orders/screens/employee_orders_screen.dart';
 import 'package:future_hub/employee/orders/screens/employee_puncher_screen.dart';
 import 'package:future_hub/puncher/home/screens/puncher_home_screen.dart';
 import 'package:future_hub/puncher/orders/screens/puncher_order_details_screen.dart';
@@ -136,8 +137,7 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/company/employee/:id',
-      builder: (context, state) =>
-          EmployeeDetailsScreen(state.pathParameters['id']!),
+      builder: (context, state) => EmployeeDetailsScreen(state.pathParameters['id']!),
     ),
     GoRoute(
       path: '/company/employees/add-single',
@@ -239,13 +239,16 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
+      path: '/employee-orders-screen',
+      builder: (context, state) => const EmployeeOrdersScreen(),
+    ),
+    GoRoute(
       path: '/change-password',
       builder: (context, state) => const ChangePasswordScreen(),
     ),
     GoRoute(
       path: '/edit-employee',
-      builder: (context, state) =>
-          EditEmployeeScreen(employee: state.extra as User),
+      builder: (context, state) => EditEmployeeScreen(employee: state.extra as User),
     ),
     GoRoute(
       path: '/company/employee/:id/employee-wallet',

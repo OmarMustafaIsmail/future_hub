@@ -1,4 +1,4 @@
-package com.futurehub.app
+package com.futurehu.app
 
 import io.flutter.embedding.android.FlutterActivity
 

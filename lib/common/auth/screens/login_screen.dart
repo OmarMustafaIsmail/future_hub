@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Text(
                         t.welcome_again,
-                        style:  TextStyle(
+                        style:  const TextStyle(
                           color: Palette.textGreyColor,
                           fontWeight: FontWeight.w100,
                           fontSize: 25,

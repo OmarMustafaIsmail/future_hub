@@ -60,7 +60,7 @@ class NotificationsService {
         FlutterLocalNotificationsPlugin();
 
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('android12splash');
+        AndroidInitializationSettings('img');
 
     const DarwinInitializationSettings initializationSettingsIOS =
         DarwinInitializationSettings(
@@ -94,7 +94,7 @@ class NotificationsService {
               channel.id,
               channel.name,
               channelDescription: channel.description,
-              icon: "android12splash",
+              icon: "img",
             ),
           ));
     });
@@ -119,7 +119,7 @@ class NotificationsService {
                 channel.id,
                 channel.name,
                 channelDescription: channel.description,
-                icon: 'android12splash',
+                icon: 'img',
               ),
             ));
       }

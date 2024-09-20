@@ -10,7 +10,8 @@ import 'package:go_router/go_router.dart';
 import '../../profile/widgets/sign_out_bottom_sheet.dart';
 
 class DrawerScreen extends StatelessWidget {
-  const DrawerScreen({super.key});
+  const DrawerScreen({this.employee = false,super.key});
+  final bool employee;
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +122,7 @@ class DrawerScreen extends StatelessWidget {
                   ),
                   SizedBox(height: height * 0.03),
                   InkWell(
-                    onTap: () => context.push('/puncher-orders-screen'),
+                    onTap:employee?()=>context.push('/employee-orders-screen'): () => context.push('/puncher-orders-screen'),
                     child: Text(
                       t.orders,
                       style: theme.textTheme.displaySmall!.copyWith(

@@ -10,6 +10,7 @@ import 'package:future_hub/common/auth/widgets/password_text_field.dart';
 import 'package:future_hub/common/graphql/schema.gql.dart';
 import 'package:future_hub/common/shared/palette.dart';
 import 'package:future_hub/common/shared/widgets/chevron_labled_text_field.dart';
+import 'package:future_hub/common/shared/widgets/chevron_text_field.dart';
 import 'package:future_hub/common/shared/widgets/clean_app_bar.dart';
 
 import '../../shared/utils/run_fetch.dart';
@@ -126,16 +127,51 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   TextEditingController(text: state.company),
                             ),
                           ),
-                        PasswordTextField(
-                          controller: _passwordController,
-                          labelText: t.password,
-                          hintText: t.enter_the_password,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width * 0.1,
+                          child: CustomTextField(
+                            control: _passwordController,
+                            label: t.password,
+                            hintText: t.enter_the_password,
+                            isPassword: true,
+                            radius: 15,
+                            enabled: true,
+                            prefixIcon: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 10),
+                                child: SvgPicture.asset('assets/icons/password.svg')),
+                              // decoration: widget.decoration.copyWith(
+                              //   suffixIcon: IconButton(
+                              //     onPressed: _toggle,
+                              //     icon: Icon(
+                              //       _show ? Icons.visibility : Icons.visibility_off,
+                              //       color: Palette.greyColor.shade500,
+                              //     ),
+                              //   ),
+                              // ),
+                                haveBorderSide: true,
+                            validateFunc: (String?s){},
+                          ),
                         ),
                         const SizedBox(height: 24.0),
-                        PasswordTextField(
-                          controller: _confirmPasswordController,
-                          labelText: t.confirm_password,
-                          hintText: t.enter_the_password_again,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width * 0.1,
+                          child: CustomTextField(
+                            control: _confirmPasswordController,
+                            label: t.confirm_password,
+                            hintText: t.enter_the_password,
+                            isPassword: true,
+                            enabled: true,
+                            prefixIcon: Padding(
+                              padding:const EdgeInsets.symmetric(horizontal: 10),
+                              child: SvgPicture.asset('assets/icons/password.svg'),
+                            ),
+                            haveBorderSide: true,
+                            radius: 15,
+
+                            validateFunc: (String?s){},
+                          ),
                         ),
                         const SizedBox(height: 24.0),
                         const Spacer(),

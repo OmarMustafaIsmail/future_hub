@@ -194,7 +194,9 @@ class _OTPFormState extends State<OTPForm> {
             onPressed: otp.length < 4
                 ? () {}
                 : () async {
-                    final message = Validator(otp)
+              debugPrint("""result ${widget.onActivate}""");
+
+              final message = Validator(otp)
                         .digits(t.otp_must_contain_only_digits)
                         .length(digits, t.otp_must_be_of_length(digits))
                         .error;
@@ -202,7 +204,7 @@ class _OTPFormState extends State<OTPForm> {
                       errorMessage = message;
                     });
                     // ignore: unnecessary_null_comparison
-                    if (widget.onActivate != null && error == null) {
+                    if (widget.onActivate != null && errorMessage == null) {
                       final message = await widget.onActivate!(otp);
                       setState(() {
                         errorMessage = message;

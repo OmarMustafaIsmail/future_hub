@@ -1,9 +1,8 @@
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:future_hub/common/auth/cubit/auth_state.dart';
 import 'package:future_hub/common/auth/models/user.dart';
 import 'package:future_hub/common/auth/services/auth_service.dart';
@@ -57,10 +56,10 @@ class AuthCubit extends Cubit<AuthState> {
       debugPrint("Error is ${error.toString()}");
       Client.authenticate(null);
       CacheManager.deleteToken();
-      // signOut();
+      return emit(AuthSignedOut());
     } finally {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FlutterNativeSplash.remove();
+        // FlutterNativeSplash.remove();
       });
     }
   }
@@ -80,8 +79,13 @@ class AuthCubit extends Cubit<AuthState> {
     throw Exception("Can't change OTP when AuthState isn't AuthSignedOut");
   }
 
-  void setPhone(String phone) {
+  void setPhone(String phone) async {
+    final token = await CacheManager.getToken();
+    if (token == null) {
+      emit(AuthSignedOut());
+    }
     final current = state;
+    debugPrint("the auth state is $state");
     if (current is AuthSignedOut) {
       return emit(
         AuthSignedOut(
@@ -107,12 +111,10 @@ class AuthCubit extends Cubit<AuthState> {
         ),
       );
     }
-    throw Exception(
-        "Can't sign in an employee when AuthState isn't AuthSignedOut");
+    throw Exception("Can't sign in an employee when AuthState isn't AuthSignedOut");
   }
 
   // 0560498238
-
   Future<void> login(User user, String token) async {
     await CacheManager.setToken(token);
     Client.authenticate(token);

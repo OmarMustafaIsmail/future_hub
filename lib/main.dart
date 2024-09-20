@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+// import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:future_hub/common/auth/cubit/auth_cubit.dart';
 import 'package:future_hub/common/auth/cubit/auth_state.dart';
 import 'package:future_hub/common/info/cubit/info_cubit.dart';
@@ -39,7 +39,7 @@ import 'firebase_options.dart';
 
 void main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await initHiveForFlutter();
 

@@ -14,7 +14,9 @@ class FutureHubAppBar extends AppBar {
       required BuildContext context,
       Color color = Palette.whiteColor,
       bool isCart = false,
-      int count = 0})
+      int count = 0,   Function()? onTap,
+        Function()? onCartTap
+      })
       : super(
           backgroundColor: color,
           elevation: 0.0,
@@ -23,44 +25,50 @@ class FutureHubAppBar extends AppBar {
             Directionality.of(context) == TextDirection.rtl
                 ? ChevronBackButton(
                     color: color,
+              onTap: onTap,
                   )
                 : Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: isCart
-                        ? Stack(
-                            children: <Widget>[
-                              SvgPicture.asset(
-                                'assets/icons/cart.svg',
-                                width: 40,
-                                height: 40,
-                              ),
-                              Positioned(
-                                right: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(1),
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  constraints: const BoxConstraints(
-                                    minWidth: 12,
-                                    minHeight: 12,
-                                  ),
-                                  child: BlocBuilder<OrderCubit, OrderState>(
-                                      builder: (context, state) {
-                                    return Text(
-                                      state.totalQuantity.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 8,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    );
-                                  }),
+                        ? GestureDetector(
+                      onTap: onCartTap,
+                          child: Stack(
+                              children: <Widget>[
+                                SvgPicture.asset(
+                                  'assets/icons/cart.svg',
+                                  width: 40,
+                                  height: 40,
                                 ),
-                              ),
-                            ],
-                          )
+                                Positioned(
+                                  right: 0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(1),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(6),
+                                    ),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 12,
+                                      minHeight: 12,
+                                    ),
+                                    child: BlocBuilder<OrderCubit, OrderState>(
+                                        builder: (context, state) {
+                                      return Center(
+                                        child: Text(
+                                          state.totalQuantity.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 8,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
+                        )
                         : SvgPicture.asset(
                       'assets/icons/app-bar-logo.svg',
                       height: 30,
@@ -70,48 +78,55 @@ class FutureHubAppBar extends AppBar {
           leading: Directionality.of(context) == TextDirection.ltr
               ? ChevronBackButton(
                   color: color,
+            onTap: onTap,
+
                 )
               : isCart
-                  ? Stack(
-                      children: <Widget>[
-                        SvgPicture.asset(
-                          'assets/icons/cart.svg',
-                          width: 40,
-                          height: 40,
-                        ),
-                        Positioned(
-                          top: 10,
-                          right: Directionality.of(context) == TextDirection.rtl
-                              ? null
-                              : 0,
-                          left: Directionality.of(context) == TextDirection.rtl
-                              ? 15
-                              : null,
-                          child: Container(
-                            padding: const EdgeInsets.all(1),
-                            decoration: BoxDecoration(
-                              color: Colors.red,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            constraints: const BoxConstraints(
-                              minWidth: 12,
-                              minHeight: 12,
-                            ),
-                            child: BlocBuilder<OrderCubit, OrderState>(
-                                builder: (context, state) {
-                              return Text(
-                                state.totalQuantity.toString(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 8,
-                                ),
-                                textAlign: TextAlign.center,
-                              );
-                            }),
+                  ? GestureDetector(
+            onTap: onCartTap,
+                    child: Stack(
+                        children: <Widget>[
+                          SvgPicture.asset(
+                            'assets/icons/cart.svg',
+                            width: 40,
+                            height: 40,
                           ),
-                        ),
-                      ],
-                    )
+                          Positioned(
+                            top: 10,
+                            right: Directionality.of(context) == TextDirection.rtl
+                                ? null
+                                : 0,
+                            left: Directionality.of(context) == TextDirection.rtl
+                                ? 15
+                                : null,
+                            child: Container(
+                              padding: const EdgeInsets.all(1),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 12,
+                                minHeight: 12,
+                              ),
+                              child: BlocBuilder<OrderCubit, OrderState>(
+                                  builder: (context, state) {
+                                return Center(
+                                  child: Text(
+                                    state.totalQuantity.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 8,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
+                  )
                   : Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: SvgPicture.asset(
@@ -123,9 +138,10 @@ class FutureHubAppBar extends AppBar {
 }
 
 class ChevronBackButton extends StatelessWidget {
-  const ChevronBackButton({required this.color, super.key});
+  const ChevronBackButton({required this.color, this.onTap,super.key});
 
   final Color color;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +150,7 @@ class ChevronBackButton extends StatelessWidget {
     }
 
     return InkWell(
-      onTap: context.pop,
+      onTap: onTap?? context.pop,
       borderRadius: BorderRadius.circular(20.0),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 30),

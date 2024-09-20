@@ -183,8 +183,7 @@ class CustomTextField extends StatelessWidget {
             }
           },
         ),
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         prefixIcon: prefixIcon,
         prefixIconConstraints: const BoxConstraints(maxHeight: 100),
         hintText: enabled != null ? hintText : "",

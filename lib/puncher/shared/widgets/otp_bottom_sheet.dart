@@ -64,24 +64,27 @@ class VerifyOtpBottomSheetState extends State<VerifyOtpBottomSheet> {
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: ChevronBottomSheet(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              t.enter_the_code_sent_to_employee_number,
-              textAlign: TextAlign.center,
-              style: theme.textTheme.titleLarge,
-            ),
-            const SizedBox(height: 18.0),
-            OTPForm(
-              loading: _loading,
-              phone: "",
-              onActivate: _onActivate,
-              onResend: _resend,
-              buttonText: t.confirm_order,
-            )
-          ],
+        child: SizedBox(
+          height: 400,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                t.enter_the_code_sent_to_employee_number,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleLarge,
+              ),
+              const SizedBox(height: 18.0),
+              OTPForm(
+                loading: _loading,
+                phone: "",
+                onActivate: _onActivate,
+                onResend: _resend,
+                buttonText: t.confirm_order,
+              )
+            ],
+          ),
         ),
       ),
     );
