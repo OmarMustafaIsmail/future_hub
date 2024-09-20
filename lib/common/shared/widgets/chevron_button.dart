@@ -57,7 +57,7 @@ class ChevronButtonStyle {
 
   static final disabled = ChevronButtonStyle(
     decoration: BoxDecoration(
-        color: const Color.fromRGBO(109, 148, 160, 1),
+        color: Palette.disabledTextColor,
         borderRadius: BorderRadius.circular(50)),
     textColor: Palette.whiteColor,
   );

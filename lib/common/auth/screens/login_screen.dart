@@ -30,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   // bool obscure = true;
 
   Future<void> _login() async {
+    print("yanas yaho1");
+
     final isValid = _form.currentState!.validate();
     if (!isValid) {
       return;
@@ -40,6 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {
           _loading = true;
         });
+        print("yanas yaho2");
 
         final phone = _phoneController.text;
 
@@ -50,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (!mounted) {
           return;
         }
-
+        print("yanas yaho3");
         if (exists) {
           context.push('/password/${_phoneController.text}');
         } else {
