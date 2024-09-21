@@ -8,19 +8,23 @@ import 'package:future_hub/common/shared/router.dart';
 import 'package:future_hub/common/shared/utils/cache_manager.dart';
 
 class ChooseLanguageScreen extends StatelessWidget {
-  const ChooseLanguageScreen({super.key});
+  const ChooseLanguageScreen({super.key, this.isBack=false});
+  final bool isBack;
 
   Future<void> _chooseLanguage(String lang, BuildContext context) async {
     final onBoarding = await CacheManager.getData('onBoarding');
     if (context.mounted) {
       SwitchLanguageBottomSheet.switchLanguage(context, language: lang);
       CacheManager.saveData('languageScreen', 'true');
-      if (onBoarding == null) {
-        router.go('/onBoarding');
-        return;
+      if(!isBack){
+        if (onBoarding == null) {
+          router.go('/onBoarding');
+          return;
+        }
+        router.go('/login');
       }
-      router.go('/login');
-    }
+      }
+
   }
 
   @override
@@ -47,6 +51,10 @@ class ChooseLanguageScreen extends StatelessWidget {
             // Handle the back button action
           },
         ),
+        actions: [
+          if(isBack)
+            Icon(Icons.arrow_forward,color: Palette.primaryColor,),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

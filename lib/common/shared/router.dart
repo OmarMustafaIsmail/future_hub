@@ -65,7 +65,9 @@ final router = GoRouter(
     ),
     GoRoute(
       path: '/choose_language_screen',
-      builder: (context, state) => const ChooseLanguageScreen(),
+      builder: (context, state) =>  ChooseLanguageScreen(
+        isBack: state.extra as bool,
+      ),
     ),
     GoRoute(
       path: '/login',

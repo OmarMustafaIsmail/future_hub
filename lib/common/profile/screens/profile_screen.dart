@@ -123,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                             child: ProfileListView(showPoints: showPoints),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(bottom: height * 0.04),
+                            padding: EdgeInsets.only(bottom: height * 0.04,top: height * 0.04),
                             child: Center(
                               child: GestureDetector(
                                 onTap: () => signOut(context),

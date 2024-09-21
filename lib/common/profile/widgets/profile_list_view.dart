@@ -148,6 +148,25 @@ class ProfileListView extends StatelessWidget {
               indent: 10,
             ),
             ProfileListTile(
+              title: t.language,
+              icon: Image.asset(
+                'assets/images/language.png',
+                color: Palette.primaryColor,
+                height: 100,
+                // colorFilter: const ColorFilter.mode(
+                //   Palette.blackColor,
+                //   BlendMode.srcATop,
+                // ),
+              ),
+              onPressed: () => context.push('/choose_language_screen',extra: true),
+            ),
+            Divider(
+              color: Colors.grey.withOpacity(0.25),
+              thickness: 1,
+              endIndent: 10,
+              indent: 10,
+            ),
+            ProfileListTile(
               title: t.about_the_app,
               icon: SizedBox(
                 height: 200,

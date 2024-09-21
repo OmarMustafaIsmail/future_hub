@@ -34,7 +34,7 @@ class BalanceDetails extends StatelessWidget {
               children: [
                 Text(
                   t.balance,
-                  style: theme.textTheme.bodySmall,
+                  style: theme.textTheme.bodyLarge,
                 ),
                 const SizedBox(height: 8.0),
                 Row(
@@ -57,7 +57,7 @@ class BalanceDetails extends StatelessWidget {
                       ),
                       child: Text(
                         t.sar,
-                        style: theme.textTheme.bodySmall,
+                        style: theme.textTheme.bodyLarge,
                       ),
                     ),
                   ],
@@ -77,7 +77,7 @@ class BalanceDetails extends StatelessWidget {
               children: [
                 SvgPicture.asset('assets/icons/withdraw.svg'),
                 const SizedBox(width: 6.0),
-                Text(t.deposit),
+                Text(t.deposit,style: theme.textTheme.bodyLarge,),
               ],
             ),
           )

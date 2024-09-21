@@ -45,9 +45,7 @@ class VerifyOtpBottomSheetState extends State<VerifyOtpBottomSheet> {
         context.pop();
       },
       after: () async {
-        print("d5lna hna");
         BlocProvider.of<OrdersCubit>(context).loadOrders(refresh: true);
-        print("tl3nna hna");
         setState(() {
           _loading = false;
         });

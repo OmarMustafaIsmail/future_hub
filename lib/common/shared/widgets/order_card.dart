@@ -41,7 +41,7 @@ class OrderCard extends StatelessWidget {
         children: [
           Text(
             DateFormat(order.createdAt, t.localeName).format(DateTime.now()),
-            style: theme.textTheme.bodySmall,
+            style: theme.textTheme.bodyLarge,
           ),
           const SizedBox(height: 12.0),
           Row(
@@ -52,12 +52,12 @@ class OrderCard extends StatelessWidget {
                     children: [
                       Text(
                         t.operation_number,
-                        style: theme.textTheme.bodySmall,
+                        style: theme.textTheme.bodyLarge,
                       ),
                       const SizedBox(width: 5.0),
                       Text(
                         order.referenceNumber!,
-                        style: theme.textTheme.bodySmall!.copyWith(
+                        style: theme.textTheme.bodyLarge!.copyWith(
                           color: Palette.blackColor,
                           fontWeight: FontWeight.bold,
                         ),
@@ -70,12 +70,12 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Text(
                       t.number_of_products,
-                      style: theme.textTheme.bodySmall,
+                      style: theme.textTheme.bodyLarge,
                     ),
                     const SizedBox(width: 5.0),
                     Text(
                       order.products!.length.toString(),
-                      style: theme.textTheme.bodySmall!.copyWith(
+                      style: theme.textTheme.bodyLarge!.copyWith(
                         color: Palette.blackColor,
                         fontWeight: FontWeight.bold,
                       ),
@@ -96,7 +96,7 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           t.client,
-                          style: theme.textTheme.bodySmall,
+                          style: theme.textTheme.bodyLarge,
                         ),
                         const SizedBox(width: 5.0),
                         CircleAvatar(
@@ -107,7 +107,7 @@ class OrderCard extends StatelessWidget {
                         const SizedBox(width: 5.0),
                         Text(
                           order.user!.name ?? "",
-                          style: theme.textTheme.bodySmall!.copyWith(
+                          style: theme.textTheme.bodyLarge!.copyWith(
                             color: Palette.blackColor,
                             fontWeight: FontWeight.bold,
                           ),
@@ -120,7 +120,7 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           t.order_total,
-                          style: theme.textTheme.bodySmall,
+                          style: theme.textTheme.bodyLarge,
                         ),
                         const SizedBox(width: 5.0),
                         PriceText(
@@ -134,7 +134,7 @@ class OrderCard extends StatelessWidget {
             ),
           Text(
             t.products,
-            style: theme.textTheme.bodySmall,
+            style: theme.textTheme.bodyLarge,
           ),
           const SizedBox(height: 12.0),
           for (final _ in shownProducts!)
@@ -148,7 +148,7 @@ class OrderCard extends StatelessWidget {
           if (summary && order.products!.length > 2)
             Text(
               '+${order.products!.length - 2} ${t.other_products}',
-              style: theme.textTheme.bodySmall!.copyWith(
+              style: theme.textTheme.bodyLarge!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: Palette.primaryColor,
               ),
