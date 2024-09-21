@@ -1,3 +1,5 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:future_hub/common/shared/cubits/orders_cubit/orders_cubit.dart';
 import 'package:future_hub/common/shared/services/orders_services.dart';
 import 'package:future_hub/common/shared/utils/run_fetch.dart';
 import 'package:future_hub/common/shared/widgets/chevron_bottom_sheet.dart';
@@ -43,6 +45,9 @@ class VerifyOtpBottomSheetState extends State<VerifyOtpBottomSheet> {
         context.pop();
       },
       after: () async {
+        print("d5lna hna");
+        BlocProvider.of<OrdersCubit>(context).loadOrders(refresh: true);
+        print("tl3nna hna");
         setState(() {
           _loading = false;
         });

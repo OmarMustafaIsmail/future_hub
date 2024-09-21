@@ -120,7 +120,7 @@ class _EmployeeOrderDetailsScreenState
                         SizedBox(
                           height: size.height * 0.01,
                         ),
-                        Text('#${(context.read<OrderCubit>().state as OrderCreatedState).referenceNumber}',
+                        Text(widget.order.referenceNumber!=null?'#${widget.order.referenceNumber}':'',
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Palette.textGreyColor,
@@ -167,6 +167,7 @@ class _EmployeeOrderDetailsScreenState
                     itemBuilder: (context, index) {
                       return OrderCardItem(
                         product: widget.order.products![index],
+                        showPrice: true,
                       );
                     },
                   ),
