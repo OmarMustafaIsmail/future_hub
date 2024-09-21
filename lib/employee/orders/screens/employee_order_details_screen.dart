@@ -120,7 +120,7 @@ class _EmployeeOrderDetailsScreenState
                         SizedBox(
                           height: size.height * 0.01,
                         ),
-                        Text('#${widget.order.referenceNumber}',
+                        Text('#${(context.read<OrderCubit>().state as OrderCreatedState).referenceNumber}',
                             style: const TextStyle(
                                 fontSize: 14,
                                 color: Palette.textGreyColor,

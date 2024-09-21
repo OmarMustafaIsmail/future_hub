@@ -109,14 +109,11 @@ class OrderCardItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
                 color: Colors.transparent,
               ),
-              child: Transform.rotate(
-                angle: math.pi / 12,
-                child: Image.network(
-                  product.product!.imagePath ?? 'https://unsplash.it/75/75',
-                  height: size.height * 0.14,
-                  width: size.width * 0.32,
-                  // fit: BoxFit.contain,
-                ),
+              child: Image.network(
+                product.product!.imagePath ?? 'https://unsplash.it/75/75',
+                height: size.height * 0.14,
+                width: size.width * 0.32,
+                // fit: BoxFit.contain,
               ),
             ),
           ),

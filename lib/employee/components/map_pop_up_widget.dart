@@ -38,6 +38,7 @@ class MapPopUpWidget extends StatelessWidget {
             children: [
               Column(
                 children: [
+                  Align(alignment:AlignmentDirectional.topEnd,child: SvgPicture.asset('assets/icons/close.svg',colorFilter: const ColorFilter.mode(Palette.primaryColor, BlendMode.srcIn),)),
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 15),
@@ -72,7 +73,7 @@ class MapPopUpWidget extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset('assets/icons/location-d.svg'),
+                      SvgPicture.asset('assets/icons/location-d.svg',colorFilter: ColorFilter.mode(Palette.primaryColor, BlendMode.srcIn),),
                       const SizedBox(
                         width: 10,
                       ),

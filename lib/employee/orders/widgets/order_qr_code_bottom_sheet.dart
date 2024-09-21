@@ -48,6 +48,7 @@ class OrderQrCodeBottomSheet extends StatelessWidget {
           BlocBuilder<OrderCubit, OrderState>(
             builder: (context, state) {
               if (state is OrderCreatedState) {
+
                 return Center(
                   child: QrImageView(
                     data: state.referenceNumber,
@@ -70,6 +71,10 @@ class OrderQrCodeBottomSheet extends StatelessWidget {
                 ),
               );
             },
+          ),
+          Center(
+            child: Text('#${(context.read<OrderCubit>().state as OrderCreatedState).referenceNumber}',
+              style: const TextStyle(fontSize: 20, color: Palette.greyColor),),
           ),
           const SizedBox(
             height: 10,

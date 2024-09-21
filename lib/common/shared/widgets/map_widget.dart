@@ -26,7 +26,7 @@ class _MapWidgetState extends State<MapWidget> {
     bearing: 0.0,
     target: LatLng(position!.latitude, position!.longitude),
     tilt: 0.0,
-    zoom: 17,
+    zoom: 13,
   );
   Set<Marker> markers = {};
   // ignore: unused_field

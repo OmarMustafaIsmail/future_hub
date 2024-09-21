@@ -116,7 +116,7 @@ class FutureHubAppBar extends AppBar {
                                     state.totalQuantity.toString(),
                                     style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 8,
+                                      fontSize: 13,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),

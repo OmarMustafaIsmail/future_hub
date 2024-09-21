@@ -79,7 +79,7 @@ class BestCarOilCard extends StatelessWidget {
                   onTap: () => context.push('/employee/oil/search'),
                   child: Transform.flip(
                       flipX: direction == TextDirection.ltr,
-                      child: Image.asset('assets/images/know-more.png')),
+                      child: Image.asset('assets/images/know-more.png',color: Palette.primaryColor,)),
                 )),
             Positioned(
               right: direction == TextDirection.rtl ? null : size.width * 0.03,
